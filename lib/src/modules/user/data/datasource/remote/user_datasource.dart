@@ -11,7 +11,91 @@ class UserDatasource extends IUserDatasource {
 
   @override
   Future<List<UserModel>> listUsers() async {
-    // TODO: implement listUsers
-    throw UnimplementedError();
+    return Future.delayed(
+      const Duration(seconds: 1),
+      () => [
+        UserModel(
+          fullname: "David",
+          cep: "48121457",
+          complement: "casa",
+          login: "david_nine",
+          number: "547",
+          password: "dsandsnvsda",
+          phone: "74945471256",
+        ),
+        UserModel(
+          fullname: "David",
+          cep: "48121457",
+          complement: "casa",
+          login: "david_nine",
+          number: "547",
+          password: "dsandsnvsda",
+          phone: "74945471256",
+        ),
+        UserModel(
+          fullname: "David",
+          cep: "48121457",
+          complement: "casa",
+          login: "david_nine",
+          number: "547",
+          password: "dsandsnvsda",
+          phone: "74945471256",
+        ),
+        UserModel(
+          fullname: "David",
+          cep: "48121457",
+          complement: "casa",
+          login: "david_nine",
+          number: "547",
+          password: "dsandsnvsda",
+          phone: "74945471256",
+        ),
+        UserModel(
+          fullname: "David",
+          cep: "48121457",
+          complement: "casa",
+          login: "david_nine",
+          number: "547",
+          password: "dsandsnvsda",
+          phone: "74945471256",
+        ),
+        UserModel(
+          fullname: "David",
+          cep: "48121457",
+          complement: "casa",
+          login: "david_nine",
+          number: "547",
+          password: "dsandsnvsda",
+          phone: "74945471256",
+        ),
+        UserModel(
+          fullname: "David",
+          cep: "48121457",
+          complement: "casa",
+          login: "david_nine",
+          number: "547",
+          password: "dsandsnvsda",
+          phone: "74945471256",
+        ),
+        UserModel(
+          fullname: "David",
+          cep: "48121457",
+          complement: "casa",
+          login: "david_nine",
+          number: "547",
+          password: "dsandsnvsda",
+          phone: "74945471256",
+        ),
+        UserModel(
+          fullname: "David",
+          cep: "48121457",
+          complement: "casa",
+          login: "david_nine",
+          number: "547",
+          password: "dsandsnvsda",
+          phone: "74945471256",
+        ),
+      ],
+    );
   }
 }
