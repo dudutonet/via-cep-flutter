@@ -17,24 +17,18 @@ class UserModule extends Module {
         //Datasources
         Bind.lazySingleton<IUserDatasource>((i) => UserDatasource()),
         //Repositories
-        Bind.lazySingleton<IUserRepository>(
-            (i) => UserRepository(datasource: i.get())),
+        Bind.lazySingleton<IUserRepository>((i) => UserRepository(datasource: i.get())),
         //Usecases
-        Bind.lazySingleton<ICreateUserUsecase>(
-            (i) => CreateUserUsecase(repository: i.get())),
-        Bind.lazySingleton<IListUsersUsecase>(
-            (i) => ListUsersUsecase(repository: i.get())),
+        Bind.lazySingleton<ICreateUserUsecase>((i) => CreateUserUsecase(repository: i.get())),
+        Bind.lazySingleton<IListUsersUsecase>((i) => ListUsersUsecase(repository: i.get())),
         //Controllers
-        Bind.lazySingleton<ListUserController>(
-            (i) => ListUserController(listUsersUsecase: i.get())),
-        Bind.lazySingleton<NewUserController>(
-            (i) => NewUserController(createUserUsecase: i.get())),
+        Bind.lazySingleton<ListUserController>((i) => ListUserController(listUsersUsecase: i.get())),
+        Bind.lazySingleton<NewUserController>((i) => NewUserController(createUserUsecase: i.get())),
       ];
 
   @override
   List<ModularRoute> get routes => [
         ChildRoute('/', child: (context, args) => const ListUsersPage()),
-        ChildRoute('/new_user',
-            child: (context, args) => NewUserPage(args.data)),
+        ChildRoute('/new_user', child: (context, args) => NewUserPage(user: args.data)),
       ];
 }

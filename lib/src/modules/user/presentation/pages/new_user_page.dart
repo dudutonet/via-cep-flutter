@@ -6,38 +6,24 @@ import 'package:via_cep_mobile/src/modules/user/domain/entities/user_entity.dart
 import 'package:via_cep_mobile/src/modules/user/presentation/controllers/new_user_controller.dart';
 
 class NewUserPage extends StatefulWidget {
-  dynamic data;
+  final UserEntity? user;
 
-  NewUserPage(this.data, {super.key});
+  const NewUserPage({super.key, required this.user});
 
   @override
-  State<NewUserPage> createState() => _NewUserPageState(data);
+  State<NewUserPage> createState() => _NewUserPageState();
 }
 
 class _NewUserPageState extends State<NewUserPage> {
   late final NewUserController controller;
 
-  late final bool isNew;
-
-  final formKey = GlobalKey<FormState>();
-
-  final dynamic data;
-
   String? _passwordCache;
   String? _confirmPasswordCache;
-
-  _NewUserPageState(this.data);
 
   @override
   void initState() {
     super.initState();
-    controller = Modular.get<NewUserController>();
-    isNew = data?['user'] == null;
-    if (isNew) {
-      controller.user = UserEntity();
-    } else {
-      controller.user = data['user'];
-    }
+    controller = Modular.get<NewUserController>()..edit(widget.user);
   }
 
   @override
@@ -52,12 +38,12 @@ class _NewUserPageState extends State<NewUserPage> {
             icon: const Icon(Icons.home)),
       ),
       body: Form(
-        key: formKey,
+        key: controller.formKey,
         child: Padding(
           padding: const EdgeInsets.all(20),
           child: ListView(
             children: [
-              Padding(padding: const EdgeInsets.all(10.0)),
+              const Padding(padding: EdgeInsets.all(10.0)),
               CustomTextField(
                 label: 'Nome completo',
                 icon: Icons.person,
@@ -82,10 +68,7 @@ class _NewUserPageState extends State<NewUserPage> {
                 initialValue: controller.user.cep?.toString() ?? '',
                 validators: [requiredValidator],
                 onSave: (text) => controller.change(cep: text),
-                inputFormatters: [
-                  FilteringTextInputFormatter.digitsOnly,
-                  CepInputFormatter()
-                ],
+                inputFormatters: [FilteringTextInputFormatter.digitsOnly, CepInputFormatter()],
               ),
               CustomTextField(
                 label: 'Número',
@@ -134,7 +117,7 @@ class _NewUserPageState extends State<NewUserPage> {
                   label: const Text('Salvar'),
                   icon: const Icon(Icons.save),
                   onPressed: () {
-                    onSubmit();
+                    controller.create();
                   },
                 ),
               )
@@ -145,21 +128,12 @@ class _NewUserPageState extends State<NewUserPage> {
     );
   }
 
-  void onSubmit() {
-    if (formKey.currentState!.validate()) {
-      formKey.currentState!.save();
-      controller.create();
-    }
-  }
-
   String? requiredValidator(text) {
     return text == null || text.isEmpty ? 'O campo é obrigatório' : null;
   }
 
   String? passwordConfirmValidator(text) {
-    return _confirmPasswordCache != _passwordCache
-        ? 'As senhas não conrrespondem'
-        : null;
+    return _confirmPasswordCache != _passwordCache ? 'As senhas não conrrespondem' : null;
   }
 }
 
