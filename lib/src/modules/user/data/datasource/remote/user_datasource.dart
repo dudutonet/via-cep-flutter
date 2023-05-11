@@ -1,8 +1,13 @@
+import 'package:via_cep_mobile/src/core/rest_client/rest_client.dart';
 import 'package:via_cep_mobile/src/modules/user/data/models/user_model.dart';
 
 import '../i_user_datasource.dart';
 
 class UserDatasource extends IUserDatasource {
+  final RestClient client;
+
+  UserDatasource({required this.client});
+
   @override
   Future<void> createUser(UserModel user) async {
     // TODO: implement createUser
