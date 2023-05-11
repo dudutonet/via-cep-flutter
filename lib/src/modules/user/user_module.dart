@@ -23,7 +23,10 @@ class UserModule extends Module {
         Bind.lazySingleton<IListUsersUsecase>((i) => ListUsersUsecase(repository: i.get())),
         //Controllers
         Bind.lazySingleton<ListUserController>((i) => ListUserController(listUsersUsecase: i.get())),
-        Bind.lazySingleton<NewUserController>((i) => NewUserController(createUserUsecase: i.get())),
+        Bind.lazySingleton<NewUserController>((i) => NewUserController(
+              createUserUsecase: i.get(),
+              getAddressByCepUsecase: i.get(),
+            )),
       ];
 
   @override

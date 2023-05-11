@@ -1,3 +1,5 @@
+import '../models/address_viacep_model.dart';
+
 abstract class SharedDatasource {
-  Future<void> getAddressByCep(String cep);
+  Future<AddressViacepModel> getAddressByCep(String cep);
 }

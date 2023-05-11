@@ -1,20 +1,35 @@
 import 'package:flutter/material.dart';
+import 'package:via_cep_mobile/src/modules/shared/domain/usecases/get_address_by_cep_usecase.dart';
 import 'package:via_cep_mobile/src/modules/user/domain/entities/user_entity.dart';
 import 'package:via_cep_mobile/src/modules/user/domain/usecases/create_user_usecase.dart';
 
 class NewUserController {
   final CreateUserUsecase createUserUsecase;
+  final GetAddressByCepUsecase getAddressByCepUsecase;
 
-  NewUserController({required this.createUserUsecase});
+  NewUserController({
+    required this.createUserUsecase,
+    required this.getAddressByCepUsecase,
+  });
 
   final formKey = GlobalKey<FormState>();
-  UserEntity user = UserEntity();
+  ValueNotifier<UserEntity> user = ValueNotifier<UserEntity>(UserEntity());
+
+  getAddress(String cep) async {
+    final result = await getAddressByCepUsecase(cep);
+
+    result.fold((l) => null, (address) {
+      change(
+        cep: address.cep,
+      );
+    });
+  }
 
   void edit(UserEntity? user) {
     if (user != null) {
-      this.user = user;
+      this.user.value = user;
     } else {
-      this.user = UserEntity();
+      this.user.value = UserEntity();
     }
   }
 
@@ -27,7 +42,7 @@ class NewUserController {
     String? complement,
     String? phone,
   }) {
-    user = user.copyWith(
+    user.value = user.value.copyWith(
       fullname: fullname,
       cep: cep,
       complement: complement,
@@ -41,7 +56,7 @@ class NewUserController {
   Future<void> create() async {
     if (!validate()) return;
 
-    final result = await createUserUsecase(user);
+    final result = await createUserUsecase(user.value);
 
     result.fold((l) => null, (r) => {});
   }
