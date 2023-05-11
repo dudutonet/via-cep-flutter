@@ -47,14 +47,14 @@ class _NewUserPageState extends State<NewUserPage> {
               CustomTextField(
                 label: 'Nome completo',
                 icon: Icons.person,
-                hint: 'Digite seu nome',
+                hint: 'Informe o seu nome',
                 initialValue: controller.user.fullname ?? '',
                 validators: [requiredValidator],
                 onSave: (text) => controller.change(fullname: text),
               ),
               CustomTextField(
                 label: 'Telefone',
-                hint: 'Digite o telefone',
+                hint: 'Informe o telefone',
                 initialValue: controller.user.phone?.toString() ?? '',
                 icon: Icons.phone,
                 onSave: (text) => controller.change(phone: text),
@@ -63,29 +63,72 @@ class _NewUserPageState extends State<NewUserPage> {
               ),
               CustomTextField(
                 label: 'CEP',
-                hint: 'Digite o CEP',
-                icon: Icons.house,
+                hint: 'Informe o CEP',
+                icon: Icons.map,
                 initialValue: controller.user.cep?.toString() ?? '',
                 validators: [requiredValidator],
                 onSave: (text) => controller.change(cep: text),
-                inputFormatters: [FilteringTextInputFormatter.digitsOnly, CepInputFormatter()],
+                inputFormatters: [
+                  FilteringTextInputFormatter.digitsOnly,
+                  CepInputFormatter()
+                ],
+              ),
+              CustomTextField(
+                label: 'Bairro',
+                hint: 'Informe o bairro',
+                icon: Icons.house,
+                initialValue: 'Bairro from ViaCep',
+                validators: [requiredValidator],
+                onSave: (text) => controller.change(cep: text),
+              ),
+              CustomTextField(
+                label: 'Rua',
+                hint: 'Informe a rua',
+                icon: Icons.arrow_upward,
+                initialValue: 'Rua from ViaCep',
+                validators: [requiredValidator],
+                onSave: (text) => controller.change(cep: text),
+              ),
+              CustomTextField(
+                label: 'Cidade',
+                hint: 'Informe a Cidade',
+                icon: Icons.location_city,
+                initialValue: 'Cidade from ViaCep',
+                validators: [requiredValidator],
+                onSave: (text) => controller.change(cep: text),
+              ),
+              CustomTextField(
+                label: 'UF',
+                hint: 'UF',
+                icon: Icons.public,
+                initialValue: 'UF from ViaCep',
+                validators: [requiredValidator],
+                onSave: (text) => controller.change(cep: text),
+              ),
+              CustomTextField(
+                label: 'IBJE',
+                hint: 'IBJE',
+                icon: Icons.abc,
+                initialValue: 'IBGE from ViaCep',
+                validators: [requiredValidator],
+                onSave: (text) => controller.change(cep: text),
               ),
               CustomTextField(
                 label: 'Número',
-                hint: 'Digite o número',
+                hint: 'Informe o número',
                 validators: [requiredValidator],
                 initialValue: controller.user.number?.toString() ?? '',
                 onSave: (text) => controller.change(number: text),
               ),
               CustomTextField(
                 label: 'Complemento',
-                hint: 'Digite o complemento',
+                hint: 'Informe o complemento',
                 initialValue: controller.user.complement ?? '',
                 onSave: (text) => controller.change(complement: text),
               ),
               CustomTextField(
                 label: 'Login',
-                hint: 'Digite o login',
+                hint: 'Informe o login',
                 icon: Icons.person,
                 validators: [requiredValidator],
                 onSave: (text) => controller.change(login: text),
@@ -93,7 +136,7 @@ class _NewUserPageState extends State<NewUserPage> {
               ),
               CustomTextField(
                 label: 'Senha',
-                hint: 'Digite a senha',
+                hint: 'Informe a senha',
                 icon: Icons.key,
                 validators: [requiredValidator],
                 initialValue: '',
@@ -133,7 +176,9 @@ class _NewUserPageState extends State<NewUserPage> {
   }
 
   String? passwordConfirmValidator(text) {
-    return _confirmPasswordCache != _passwordCache ? 'As senhas não conrrespondem' : null;
+    return _confirmPasswordCache != _passwordCache
+        ? 'As senhas não conrrespondem'
+        : null;
   }
 }
 
