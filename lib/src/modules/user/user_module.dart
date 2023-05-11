@@ -15,7 +15,7 @@ class UserModule extends Module {
   @override
   List<Bind> get binds => [
         //Datasources
-        Bind.lazySingleton<IUserDatasource>((i) => UserDatasource()),
+        Bind.lazySingleton<IUserDatasource>((i) => UserDatasource(client: i.get())),
         //Repositories
         Bind.lazySingleton<IUserRepository>((i) => UserRepository(datasource: i.get())),
         //Usecases

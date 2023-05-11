@@ -1,7 +1,6 @@
 import 'dart:io';
 
 import 'package:dio/dio.dart';
-import 'package:flutter/foundation.dart';
 
 import '../interceptors/failure_interceptor.dart';
 import '../rest_client.dart';
@@ -12,6 +11,7 @@ class DioRestClient implements RestClient {
   final String? baseUrl;
 
   BaseOptions _defaultOptions() => BaseOptions(
+        // TODO - Alterar essa base URL...
         baseUrl: 'http://localhost:3333',
         connectTimeout: const Duration(seconds: 60),
         receiveTimeout: const Duration(seconds: 60),
