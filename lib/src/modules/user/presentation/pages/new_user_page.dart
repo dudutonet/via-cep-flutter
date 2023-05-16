@@ -50,45 +50,14 @@ class _NewUserPageState extends State<NewUserPage> {
                   CustomTextField(
                     label: 'Nome completo',
                     icon: Icons.person,
-                    hint: 'Digite seu nome',
+                    hint: 'Informe seu nome completo',
                     initialValue: user.fullname ?? '',
                     validators: [requiredValidator],
                     onSave: (text) => controller.change(fullname: text),
                   ),
                   CustomTextField(
-                    label: 'Telefone',
-                    hint: 'Digite o telefone',
-                    initialValue: user.phone?.toString() ?? '',
-                    icon: Icons.phone,
-                    onSave: (text) => controller.change(phone: text),
-                    inputFormatters: [TelefoneInputFormatter()],
-                    validators: [requiredValidator],
-                  ),
-                  CustomTextField(
-                    label: 'CEP',
-                    hint: 'Digite o CEP',
-                    icon: Icons.house,
-                    initialValue: user.cep?.toString() ?? '',
-                    validators: [requiredValidator],
-                    onSave: (text) => controller.change(cep: text),
-                    inputFormatters: [FilteringTextInputFormatter.digitsOnly, CepInputFormatter()],
-                  ),
-                  CustomTextField(
-                    label: 'Número',
-                    hint: 'Digite o número',
-                    validators: [requiredValidator],
-                    initialValue: user.number?.toString() ?? '',
-                    onSave: (text) => controller.change(number: text),
-                  ),
-                  CustomTextField(
-                    label: 'Complemento',
-                    hint: 'Digite o complemento',
-                    initialValue: user.complement ?? '',
-                    onSave: (text) => controller.change(complement: text),
-                  ),
-                  CustomTextField(
                     label: 'Login',
-                    hint: 'Digite o login',
+                    hint: 'Informe seu login',
                     icon: Icons.person,
                     validators: [requiredValidator],
                     onSave: (text) => controller.change(login: text),
@@ -96,7 +65,7 @@ class _NewUserPageState extends State<NewUserPage> {
                   ),
                   CustomTextField(
                     label: 'Senha',
-                    hint: 'Digite a senha',
+                    hint: 'Informe a senha',
                     icon: Icons.key,
                     validators: [requiredValidator],
                     initialValue: '',
@@ -112,6 +81,82 @@ class _NewUserPageState extends State<NewUserPage> {
                     validators: [requiredValidator, passwordConfirmValidator],
                     onChanged: (text) => _confirmPasswordCache = text,
                     password: true,
+                  ),
+                  CustomTextField(
+                    label: 'Telefone',
+                    hint: 'Informe seu telefone',
+                    initialValue: user.phone?.toString() ?? '',
+                    icon: Icons.phone,
+                    onSave: (text) => controller.change(phone: text),
+                    inputFormatters: [TelefoneInputFormatter()],
+                    validators: [requiredValidator],
+                  ),
+                  CustomTextField(
+                    label: 'CEP',
+                    hint: 'Informe o CEP',
+                    icon: Icons.map,
+                    initialValue: user.cep?.toString() ?? '',
+                    validators: [requiredValidator],
+                    onSave: (text) => controller.change(cep: text),
+                    inputFormatters: [
+                      FilteringTextInputFormatter.digitsOnly,
+                      CepInputFormatter()
+                    ],
+                  ),
+                  CustomTextField(
+                    label: 'Bairro',
+                    hint: 'Informe o bairro',
+                    icon: Icons.house,
+                    initialValue: user.neighborhood?.toString() ?? '',
+                    validators: [requiredValidator],
+                    onSave: (text) => controller.change(neighborhood: text),
+                  ),
+                  CustomTextField(
+                    label: 'Rua',
+                    hint: 'Informe a rua',
+                    icon: Icons.arrow_upward,
+                    initialValue: user.street?.toString() ?? '',
+                    validators: [requiredValidator],
+                    onSave: (text) => controller.change(street: text),
+                  ),
+                  CustomTextField(
+                    label: 'Cidade',
+                    hint: 'Informe a Cidade',
+                    icon: Icons.location_city,
+                    initialValue: user.city?.toString() ?? '',
+                    validators: [requiredValidator],
+                    onSave: (text) => controller.change(city: text),
+                  ),
+                  CustomTextField(
+                    label: 'UF',
+                    hint: 'UF',
+                    icon: Icons.public,
+                    initialValue: user.uf?.toString() ?? '',
+                    validators: [requiredValidator],
+                    onSave: (text) => controller.change(uf: text),
+                  ),
+                  CustomTextField(
+                    label: 'Número',
+                    hint: 'Digite o número',
+                    validators: [requiredValidator],
+                    initialValue: user.number?.toString() ?? '',
+                    onSave: (text) => controller.change(number: text),
+                  ),
+                  CustomTextField(
+                    label: 'Complemento',
+                    hint: 'Digite o complemento',
+                    initialValue: user.complement ?? '',
+                    onSave: (text) => controller.change(complement: text),
+                  ),
+                  CustomTextField(
+                    label: 'IBJE',
+                    hint: 'IBJE',
+                    enabled: false,
+                    readOnly: true,
+                    icon: Icons.abc,
+                    initialValue: user.ibge?.toString() ?? '',
+                    validators: [requiredValidator],
+                    onSave: (text) => controller.change(ibge: text),
                   ),
                   SizedBox(
                     // width: double.infinity,
@@ -138,33 +183,38 @@ class _NewUserPageState extends State<NewUserPage> {
   }
 
   String? passwordConfirmValidator(text) {
-    return _confirmPasswordCache != _passwordCache ? 'As senhas não conrrespondem' : null;
+    return _confirmPasswordCache != _passwordCache
+        ? 'As senhas não conrrespondem'
+        : null;
   }
 }
 
 class CustomTextField extends StatelessWidget {
-  final String label;
-  final String hint;
-
-  final IconData? icon;
-  final List<String? Function(String text)> validators;
-  final void Function(String? text)? onSave;
-  final void Function(String? text)? onChanged;
-  final List<TextInputFormatter> inputFormatters;
-  final bool password;
   final String initialValue;
+  final String hint;
+  final String label;
+  final bool enabled;
+  final bool password;
+  final bool readOnly;
+  final IconData? icon;
+  final List<TextInputFormatter> inputFormatters;
+  final List<String? Function(String text)> validators;
+  final void Function(String? text)? onChanged;
+  final void Function(String? text)? onSave;
 
   const CustomTextField({
     super.key,
-    required this.label,
-    required this.hint,
     required this.initialValue,
-    this.onSave,
-    this.icon,
-    this.validators = const [],
-    this.inputFormatters = const [],
+    required this.hint,
+    required this.label,
+    this.enabled = true,
+    this.readOnly = false,
     this.password = false,
+    this.icon,
+    this.inputFormatters = const [],
+    this.validators = const [],
     this.onChanged,
+    this.onSave,
   });
 
   @override
@@ -185,6 +235,8 @@ class CustomTextField extends StatelessWidget {
           onSaved: onSave,
           initialValue: initialValue,
           onChanged: onChanged,
+          enabled: enabled,
+          readOnly: readOnly,
           decoration: InputDecoration(
             labelText: label,
             hintText: hint,
