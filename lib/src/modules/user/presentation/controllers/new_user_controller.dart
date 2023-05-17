@@ -21,6 +21,7 @@ class NewUserController {
     result.fold((l) => null, (address) {
       change(
         cep: address.cep,
+        street: address.logradouro,
       );
     });
   }

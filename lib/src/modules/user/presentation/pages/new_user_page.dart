@@ -17,13 +17,23 @@ class NewUserPage extends StatefulWidget {
 class _NewUserPageState extends State<NewUserPage> {
   late final NewUserController controller;
 
+  String? _cep;
   String? _passwordCache;
   String? _confirmPasswordCache;
+  FocusNode focus = FocusNode();
 
   @override
   void initState() {
     super.initState();
     controller = Modular.get<NewUserController>()..edit(widget.user);
+
+    focus.addListener(() {
+      if (!focus.hasFocus) {
+        controller.getAddress(_cep ?? '').toString();
+        print(controller.user.value.street);
+      }
+    });
+    super.initState();
   }
 
   @override
@@ -97,7 +107,9 @@ class _NewUserPageState extends State<NewUserPage> {
                     icon: Icons.map,
                     initialValue: user.cep?.toString() ?? '',
                     validators: [requiredValidator],
+                    onChanged: (text) => _cep = text,
                     onSave: (text) => controller.change(cep: text),
+                    focus: focus,
                     inputFormatters: [
                       FilteringTextInputFormatter.digitsOnly,
                       CepInputFormatter()
@@ -197,6 +209,7 @@ class CustomTextField extends StatelessWidget {
   final bool password;
   final bool readOnly;
   final IconData? icon;
+  final FocusNode? focus;
   final List<TextInputFormatter> inputFormatters;
   final List<String? Function(String text)> validators;
   final void Function(String? text)? onChanged;
@@ -211,6 +224,7 @@ class CustomTextField extends StatelessWidget {
     this.readOnly = false,
     this.password = false,
     this.icon,
+    this.focus,
     this.inputFormatters = const [],
     this.validators = const [],
     this.onChanged,
@@ -243,6 +257,7 @@ class CustomTextField extends StatelessWidget {
             border: const OutlineInputBorder(),
             prefixIcon: icon == null ? null : Icon(icon),
           ),
+          focusNode: focus,
           inputFormatters: inputFormatters,
           obscureText: password,
         ),
