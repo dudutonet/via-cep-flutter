@@ -15,6 +15,6 @@ class GetAddressByCepUsecase extends IGetAddressByCepUsecase {
 
   @override
   Future<Either<Failure, AddressViacepEntity>> call(String cep) async {
-    return await repository.getAddressByCep(cep);
+    return await repository.getAddressByCep(cep.replaceAll("-", "").replaceAll(".", ""));
   }
 }

@@ -15,10 +15,15 @@ class NewUserController {
   final formKey = GlobalKey<FormState>();
   ValueNotifier<UserEntity> user = ValueNotifier<UserEntity>(UserEntity());
 
+  TextEditingController logradouroController = TextEditingController();
+
   getAddress(String cep) async {
     final result = await getAddressByCepUsecase(cep);
 
-    result.fold((l) => null, (address) {
+    result.fold((l) => () {
+    }, (address) {
+      print(address.cep);
+      print(address.logradouro);
       change(
         cep: address.cep,
         street: address.logradouro,
@@ -28,10 +33,16 @@ class NewUserController {
 
   void edit(UserEntity? user) {
     if (user != null) {
-      this.user.value = user;
+     // this.user.value = user;
     } else {
       this.user.value = UserEntity();
     }
+  }
+
+  edit(UserEd) {
+    logradouroController.text = street;
+
+    // this.user.value = UserEd;
   }
 
   void change({
@@ -48,6 +59,9 @@ class NewUserController {
     String? complement,
     String? phone,
   }) {
+    if(street != null)
+      logradouroController.text = street;
+
     user.value = user.value.copyWith(
       fullname: fullname,
       cep: cep,

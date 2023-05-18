@@ -29,8 +29,7 @@ class _NewUserPageState extends State<NewUserPage> {
 
     focus.addListener(() {
       if (!focus.hasFocus) {
-        controller.getAddress(_cep ?? '').toString();
-        print(controller.user.value.street);
+        controller.getAddress(_cep ?? '');
       }
     });
     super.initState();
@@ -124,6 +123,7 @@ class _NewUserPageState extends State<NewUserPage> {
                     onSave: (text) => controller.change(neighborhood: text),
                   ),
                   CustomTextField(
+                    controller: controller.logradouroController,
                     label: 'Rua',
                     hint: 'Informe a rua',
                     icon: Icons.arrow_upward,
@@ -214,12 +214,14 @@ class CustomTextField extends StatelessWidget {
   final List<String? Function(String text)> validators;
   final void Function(String? text)? onChanged;
   final void Function(String? text)? onSave;
+  final TextEditingController? controller;
 
   const CustomTextField({
     super.key,
     required this.initialValue,
     required this.hint,
     required this.label,
+    this.controller,
     this.enabled = true,
     this.readOnly = false,
     this.password = false,
@@ -236,6 +238,7 @@ class CustomTextField extends StatelessWidget {
     return Column(
       children: [
         TextFormField(
+          controller: controller,
           validator: (value) {
             for (var validator in validators) {
               var validatorResult = validator.call(value!);
@@ -247,7 +250,7 @@ class CustomTextField extends StatelessWidget {
           },
           autovalidateMode: AutovalidateMode.onUserInteraction,
           onSaved: onSave,
-          initialValue: initialValue,
+          //initialValue: initialValue,
           onChanged: onChanged,
           enabled: enabled,
           readOnly: readOnly,
