@@ -10,7 +10,7 @@ class UserDatasource extends IUserDatasource {
 
   @override
   Future<void> createUser(UserModel user) async {
-    throw UnimplementedError();
+    return Future.delayed(const Duration(seconds: 1));
   }
 
   @override
