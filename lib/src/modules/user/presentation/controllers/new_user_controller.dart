@@ -15,14 +15,23 @@ class NewUserController {
   final formKey = GlobalKey<FormState>();
   ValueNotifier<UserEntity> user = ValueNotifier<UserEntity>(UserEntity());
 
+  TextEditingController streetController = TextEditingController();
+  TextEditingController neighborhoodController = TextEditingController();
+  TextEditingController cityController = TextEditingController();
+  TextEditingController ufController = TextEditingController();
+  TextEditingController ibgeController = TextEditingController();
+
   getAddress(String cep) async {
     final result = await getAddressByCepUsecase(cep);
 
-    result.fold((l) => null, (address) {
+    result.fold((l) => () {}, (address) {
       change(
-        cep: address.cep,
-        street: address.logradouro,
-      );
+          cep: address.cep,
+          street: address.logradouro,
+          neighborhood: address.bairro,
+          city: address.localidade,
+          uf: address.uf,
+          ibge: address.ibge);
     });
   }
 
@@ -48,6 +57,12 @@ class NewUserController {
     String? complement,
     String? phone,
   }) {
+    if (street != null) streetController.text = street;
+    if (neighborhood != null) neighborhoodController.text = neighborhood;
+    if (city != null) cityController.text = city;
+    if (uf != null) ufController.text = uf;
+    if (ibge != null) ibgeController.text = ibge;
+
     user.value = user.value.copyWith(
       fullname: fullname,
       cep: cep,
@@ -64,12 +79,19 @@ class NewUserController {
     );
   }
 
-  Future<void> create() async {
+  Future<void> create(context) async {
     if (!validate()) return;
 
     final result = await createUserUsecase(user.value);
 
-    result.fold((l) => null, (r) => {});
+    result.fold((l) => null, (r) {
+      streetController.clear();
+      neighborhoodController.clear();
+      cityController.clear();
+      ufController.clear();
+      ibgeController.clear();
+      Navigator.of(context).pushReplacementNamed('/');
+    });
   }
 
   bool validate() {

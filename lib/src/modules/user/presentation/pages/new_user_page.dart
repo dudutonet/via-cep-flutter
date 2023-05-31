@@ -29,8 +29,7 @@ class _NewUserPageState extends State<NewUserPage> {
 
     focus.addListener(() {
       if (!focus.hasFocus) {
-        controller.getAddress(_cep ?? '').toString();
-        print(controller.user.value.street);
+        controller.getAddress(_cep ?? '');
       }
     });
     super.initState();
@@ -116,34 +115,34 @@ class _NewUserPageState extends State<NewUserPage> {
                     ],
                   ),
                   CustomTextField(
+                    controller: controller.neighborhoodController,
                     label: 'Bairro',
                     hint: 'Informe o bairro',
                     icon: Icons.house,
-                    initialValue: user.neighborhood?.toString() ?? '',
                     validators: [requiredValidator],
                     onSave: (text) => controller.change(neighborhood: text),
                   ),
                   CustomTextField(
+                    controller: controller.streetController,
                     label: 'Rua',
                     hint: 'Informe a rua',
                     icon: Icons.arrow_upward,
-                    initialValue: user.street?.toString() ?? '',
                     validators: [requiredValidator],
                     onSave: (text) => controller.change(street: text),
                   ),
                   CustomTextField(
+                    controller: controller.cityController,
                     label: 'Cidade',
                     hint: 'Informe a Cidade',
                     icon: Icons.location_city,
-                    initialValue: user.city?.toString() ?? '',
                     validators: [requiredValidator],
                     onSave: (text) => controller.change(city: text),
                   ),
                   CustomTextField(
+                    controller: controller.ufController,
                     label: 'UF',
                     hint: 'UF',
                     icon: Icons.public,
-                    initialValue: user.uf?.toString() ?? '',
                     validators: [requiredValidator],
                     onSave: (text) => controller.change(uf: text),
                   ),
@@ -161,12 +160,12 @@ class _NewUserPageState extends State<NewUserPage> {
                     onSave: (text) => controller.change(complement: text),
                   ),
                   CustomTextField(
+                    controller: controller.ibgeController,
                     label: 'IBJE',
                     hint: 'IBJE',
                     enabled: false,
                     readOnly: true,
                     icon: Icons.abc,
-                    initialValue: user.ibge?.toString() ?? '',
                     validators: [requiredValidator],
                     onSave: (text) => controller.change(ibge: text),
                   ),
@@ -177,7 +176,7 @@ class _NewUserPageState extends State<NewUserPage> {
                       label: const Text('Salvar'),
                       icon: const Icon(Icons.save),
                       onPressed: () {
-                        controller.create();
+                        controller.create(context);
                       },
                     ),
                   )
@@ -202,24 +201,26 @@ class _NewUserPageState extends State<NewUserPage> {
 }
 
 class CustomTextField extends StatelessWidget {
-  final String initialValue;
   final String hint;
   final String label;
   final bool enabled;
   final bool password;
   final bool readOnly;
+  final String? initialValue;
   final IconData? icon;
   final FocusNode? focus;
   final List<TextInputFormatter> inputFormatters;
   final List<String? Function(String text)> validators;
   final void Function(String? text)? onChanged;
   final void Function(String? text)? onSave;
+  final TextEditingController? controller;
 
   const CustomTextField({
     super.key,
-    required this.initialValue,
     required this.hint,
     required this.label,
+    this.initialValue,
+    this.controller,
     this.enabled = true,
     this.readOnly = false,
     this.password = false,
@@ -236,6 +237,7 @@ class CustomTextField extends StatelessWidget {
     return Column(
       children: [
         TextFormField(
+          controller: controller,
           validator: (value) {
             for (var validator in validators) {
               var validatorResult = validator.call(value!);

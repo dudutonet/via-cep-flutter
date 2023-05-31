@@ -14,12 +14,12 @@ class AddressViacepModel extends AddressViacepEntity {
   static AddressViacepModel fromMap(Map<String, dynamic> map) {
     return AddressViacepModel(
       bairro: map["bairro"],
-      cep: map["bairro"],
-      complemento: map["bairro"],
-      ibge: map["bairro"],
-      localidade: map["bairro"],
-      logradouro: map["bairro"],
-      uf: map["bairro"],
+      cep: map["cep"],
+      complemento: map["complemento"],
+      ibge: map["ibge"],
+      localidade: map["localidade"],
+      logradouro: map["logradouro"],
+      uf: map["uf"],
     );
   }
 }
