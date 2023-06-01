@@ -31,10 +31,10 @@
   [link_aqui_quando_disponível]
 
 # Getting Started
-  Será necessário rodar o comando 'flutter pug get' para instalar as dependências;
-  Executar o comando 'flutter run' para executar a aplicação
+  - Será necessário rodar o comando 'flutter pug get' para instalar as dependências;
+  - Executar o comando 'flutter run' para executar a aplicação
   
-  LEMBRETE: set PATH=%PATH%;C:\flutter\bin
+  -LEMBRETE: set PATH=%PATH%;C:\flutter\bin
   
 # Contribuição
   Sinta-se à vontade para contribuir com este projeto. Se você encontrar algum problema ou tiver sugestões de melhoria, por favor, abra uma issue ou envie um pull request.
