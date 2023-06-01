@@ -2,6 +2,7 @@ import 'package:brasil_fields/brasil_fields.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_modular/flutter_modular.dart';
+import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
 import 'package:via_cep_mobile/src/modules/user/domain/entities/user_entity.dart';
 import 'package:via_cep_mobile/src/modules/user/presentation/controllers/new_user_controller.dart';
 
@@ -94,10 +95,10 @@ class _NewUserPageState extends State<NewUserPage> {
                   CustomTextField(
                     label: 'Telefone',
                     hint: 'Informe seu telefone',
-                    initialValue: user.phone?.toString() ?? '',
+                    controller: controller.phoneController,
                     icon: Icons.phone,
                     onSave: (text) => controller.change(phone: text),
-                    inputFormatters: [TelefoneInputFormatter()],
+                    inputFormatters: [controller.phoneMask],
                     validators: [requiredValidator],
                   ),
                   CustomTextField(
