@@ -5,7 +5,8 @@
 ## Tecnologias Utilizadas
   - Framework: Flutter
   - Linguagem: Dart
-  
+  - Controle de versão: Git
+
 ## Equipe
   - David Hildebrandt
   - Eduardo Tonet
