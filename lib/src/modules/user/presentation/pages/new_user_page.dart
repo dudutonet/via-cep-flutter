@@ -2,6 +2,7 @@ import 'package:brasil_fields/brasil_fields.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_modular/flutter_modular.dart';
+import 'package:via_cep_mobile/src/modules/shared/widgets/custom_text_field.dart';
 import 'package:via_cep_mobile/src/modules/user/domain/entities/user_entity.dart';
 import 'package:via_cep_mobile/src/modules/user/presentation/controllers/new_user_controller.dart';
 
@@ -94,10 +95,10 @@ class _NewUserPageState extends State<NewUserPage> {
                   CustomTextField(
                     label: 'Telefone',
                     hint: 'Informe seu telefone',
-                    initialValue: user.phone?.toString() ?? '',
+                    controller: controller.phoneController,
                     icon: Icons.phone,
                     onSave: (text) => controller.change(phone: text),
-                    inputFormatters: [TelefoneInputFormatter()],
+                    inputFormatters: [controller.phoneMask],
                     validators: [requiredValidator],
                   ),
                   CustomTextField(
@@ -197,74 +198,5 @@ class _NewUserPageState extends State<NewUserPage> {
     return _confirmPasswordCache != _passwordCache
         ? 'As senhas não conrrespondem'
         : null;
-  }
-}
-
-class CustomTextField extends StatelessWidget {
-  final String hint;
-  final String label;
-  final bool enabled;
-  final bool password;
-  final bool readOnly;
-  final String? initialValue;
-  final IconData? icon;
-  final FocusNode? focus;
-  final List<TextInputFormatter> inputFormatters;
-  final List<String? Function(String text)> validators;
-  final void Function(String? text)? onChanged;
-  final void Function(String? text)? onSave;
-  final TextEditingController? controller;
-
-  const CustomTextField({
-    super.key,
-    required this.hint,
-    required this.label,
-    this.initialValue,
-    this.controller,
-    this.enabled = true,
-    this.readOnly = false,
-    this.password = false,
-    this.icon,
-    this.focus,
-    this.inputFormatters = const [],
-    this.validators = const [],
-    this.onChanged,
-    this.onSave,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      children: [
-        TextFormField(
-          controller: controller,
-          validator: (value) {
-            for (var validator in validators) {
-              var validatorResult = validator.call(value!);
-              if (validatorResult != null) {
-                return validatorResult;
-              }
-            }
-            return null;
-          },
-          autovalidateMode: AutovalidateMode.onUserInteraction,
-          onSaved: onSave,
-          initialValue: initialValue,
-          onChanged: onChanged,
-          enabled: enabled,
-          readOnly: readOnly,
-          decoration: InputDecoration(
-            labelText: label,
-            hintText: hint,
-            border: const OutlineInputBorder(),
-            prefixIcon: icon == null ? null : Icon(icon),
-          ),
-          focusNode: focus,
-          inputFormatters: inputFormatters,
-          obscureText: password,
-        ),
-        const Padding(padding: EdgeInsets.all(10)),
-      ],
-    );
   }
 }

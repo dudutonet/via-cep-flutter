@@ -35,4 +35,17 @@ class UserRepository extends IUserRepository {
       return Left(UnhandledFailure());
     }
   }
+
+  @override
+  Future<Either<Failure, UserModel>> getUserById(int id) async {
+    try {
+      final result = await datasource.getById(id);
+
+      return right(result);
+    } on Failure catch (e) {
+      return Left(e);
+    } catch (_) {
+      return Left(UnhandledFailure());
+    }
+  }
 }

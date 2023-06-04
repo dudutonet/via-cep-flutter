@@ -24,10 +24,36 @@ class UserDatasource extends IUserDatasource {
           complement: "casa",
           login: "david_nine",
           number: "547",
-          password: "dsandsnvsda",
-          phone: "74945471256",
+          password: "12s1231",
+          phone: "47995846781",
+          city: "Blumenau",
+          neighborhood: "Agua branca",
+          street: "Rua Bahia",
+          uf: "SC",
+          ibge: "123141",
         ),
       ],
+    );
+  }
+
+  @override
+  Future<UserModel> getById(int id) async {
+    return Future.delayed(
+      const Duration(seconds: 1),
+      () => UserModel(
+        fullname: "David",
+        cep: "48121457",
+        complement: "casa",
+        login: "david_nine",
+        number: "547",
+        password: "12s1231",
+        phone: "47995846781",
+        city: "Blumenau",
+        neighborhood: "Agua branca",
+        street: "Rua Bahia",
+        uf: "SC",
+        ibge: "123141",
+      ),
     );
   }
 }

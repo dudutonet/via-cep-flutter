@@ -31,7 +31,9 @@ class _ListUsersPageState extends State<ListUsersPage> {
               subtitle: Text(
                 'Telefone: ${UtilBrasilFields.obterTelefone(users[index].phone!)}',
               ),
-              onTap: () => {Modular.to.navigate('new_user', arguments: users[index])},
+              onTap: () {
+                Modular.to.navigate('new_user', arguments: users[index]);
+              },
             ),
           );
         });
