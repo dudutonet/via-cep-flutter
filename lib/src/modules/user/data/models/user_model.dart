@@ -9,11 +9,6 @@ class UserModel extends UserEntity {
     required super.number,
     required super.complement,
     required super.phone,
-    required super.city,
-    required super.ibge,
-    required super.neighborhood,
-    required super.street,
-    required super.uf,
   });
 
   Map<String, dynamic> toMap() {
@@ -25,11 +20,6 @@ class UserModel extends UserEntity {
       "number": number,
       "complement": complement,
       "phone": phone,
-      "city": city,
-      "ibge": ibge,
-      "neighborhood": neighborhood,
-      "street": street,
-      "uf": uf,
     };
   }
 
@@ -42,11 +32,6 @@ class UserModel extends UserEntity {
       number: map["number"],
       complement: map["complement"],
       phone: map["phone"],
-      city: map["city"],
-      ibge: map["ibge"],
-      neighborhood: map["neighborhood"],
-      street: map["street"],
-      uf: map["uf"],
     );
   }
 
@@ -59,11 +44,6 @@ class UserModel extends UserEntity {
       number: entity.number,
       complement: entity.complement,
       phone: entity.phone,
-      city: entity.city,
-      ibge: entity.ibge,
-      neighborhood: entity.neighborhood,
-      street: entity.street,
-      uf: entity.uf,
     );
   }
 }

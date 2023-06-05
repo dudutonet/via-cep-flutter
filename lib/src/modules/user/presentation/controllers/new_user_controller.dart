@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
 import 'package:via_cep_mobile/src/modules/shared/domain/usecases/get_address_by_cep_usecase.dart';
+import 'package:via_cep_mobile/src/modules/user/data/models/cep_model.dart';
 import 'package:via_cep_mobile/src/modules/user/domain/entities/cep_entity.dart';
 import 'package:via_cep_mobile/src/modules/user/domain/entities/user_entity.dart';
 import 'package:via_cep_mobile/src/modules/user/domain/usecases/create_cep_usecase.dart';
@@ -78,15 +79,16 @@ class NewUserController {
   changeUser(UserEntity user) {
     change(
       fullname: user.fullname,
-      cep: user.cep,
-      city: user.city,
       complement: user.complement,
-      ibge: user.ibge,
+      cep: user.cep!.cep,
+      city: user.cep!.city,
+      ddd: user.cep!.ddd,
+      ibge: user.cep!.ibge,
+      neighborhood: user.cep!.neighborhood,
+      street: user.cep!.street,
       login: user.login,
-      neighborhood: user.neighborhood,
       number: user.number,
       phone: user.phone,
-      street: user.street,
       uf: user.password,
     );
   }
@@ -96,30 +98,38 @@ class NewUserController {
     String? login,
     String? password,
     String? cep,
+    String? number,
+    String? complement,
+    String? phone,
     String? street,
     String? neighborhood,
     String? city,
     String? uf,
     String? ibge,
-    String? number,
-    String? complement,
-    String? phone,
+    String? ddd,
   }) {
     if (street != null) streetController.text = street;
     if (neighborhood != null) neighborhoodController.text = neighborhood;
     if (city != null) cityController.text = city;
     if (uf != null) ufController.text = uf;
     if (ibge != null) ibgeController.text = ibge;
-    if (phone != null) phoneController.text = phone;
+
+    CepEntity? cepMoodel;
+    if (user.value.cep != null) {
+      cepMoodel = CepEntity(
+        cep: cep,
+        city: city,
+        ddd: ddd,
+        ibge: ibge,
+        neighborhood: neighborhood,
+        street: street,
+        uf: uf,
+      );
+    }
 
     user.value = user.value.copyWith(
       fullname: fullname,
-      cep: cep,
-      street: street,
-      neighborhood: neighborhood,
-      city: city,
-      uf: uf,
-      ibge: ibge,
+      cep: cepMoodel,
       complement: complement,
       login: login,
       number: number,

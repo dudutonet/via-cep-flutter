@@ -15,7 +15,7 @@ class UserDatasource extends IUserDatasource {
 
   @override
   Future<List<UserModel>> listUsers() async {
-    return Future.delayed(
+    return Stream.fromFuture(Future.delayed(
       const Duration(seconds: 1),
       () => [
         UserModel(
@@ -26,14 +26,9 @@ class UserDatasource extends IUserDatasource {
           number: "547",
           password: "12s1231",
           phone: "47995846781",
-          city: "Blumenau",
-          neighborhood: "Agua branca",
-          street: "Rua Bahia",
-          uf: "SC",
-          ibge: "123141",
         ),
       ],
-    );
+    ));
   }
 
   @override
@@ -48,11 +43,6 @@ class UserDatasource extends IUserDatasource {
         number: "547",
         password: "12s1231",
         phone: "47995846781",
-        city: "Blumenau",
-        neighborhood: "Agua branca",
-        street: "Rua Bahia",
-        uf: "SC",
-        ibge: "123141",
       ),
     );
   }

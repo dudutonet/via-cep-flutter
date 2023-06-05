@@ -1,13 +1,10 @@
+import 'package:via_cep_mobile/src/modules/user/domain/entities/cep_entity.dart';
+
 class UserEntity {
   final String? fullname;
   final String? login;
   final String? password;
-  final String? cep;
-  final String? street;
-  final String? neighborhood;
-  final String? city;
-  final String? uf;
-  final String? ibge;
+  final CepEntity? cep;
   final String? number;
   final String? complement;
   final String? phone;
@@ -17,11 +14,6 @@ class UserEntity {
     this.login,
     this.password,
     this.cep,
-    this.street,
-    this.neighborhood,
-    this.city,
-    this.uf,
-    this.ibge,
     this.number,
     this.complement,
     this.phone,
@@ -31,12 +23,7 @@ class UserEntity {
     String? fullname,
     String? login,
     String? password,
-    String? cep,
-    String? street,
-    String? neighborhood,
-    String? city,
-    String? uf,
-    String? ibge,
+    CepEntity? cep,
     String? number,
     String? complement,
     String? phone,
@@ -46,11 +33,6 @@ class UserEntity {
       fullname: fullname ?? this.fullname,
       login: login ?? this.login,
       cep: cep ?? this.cep,
-      street: street ?? this.street,
-      neighborhood: neighborhood ?? this.neighborhood,
-      city: city ?? this.city,
-      uf: uf ?? this.uf,
-      ibge: ibge ?? this.ibge,
       number: number ?? this.number,
       password: password ?? this.password,
       phone: phone ?? this.phone,
