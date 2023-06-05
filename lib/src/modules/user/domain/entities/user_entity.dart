@@ -3,8 +3,8 @@ import 'package:via_cep_mobile/src/modules/user/domain/entities/cep_entity.dart'
 class UserEntity {
   final String? fullname;
   final String? login;
-  final String? password;
   final CepEntity? cep;
+  final String? password;
   final String? number;
   final String? complement;
   final String? phone;

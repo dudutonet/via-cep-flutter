@@ -15,7 +15,7 @@ class UserDatasource extends IUserDatasource {
 
   @override
   Future<List<UserModel>> listUsers() async {
-    return Stream.fromFuture(Future.delayed(
+    return Future.delayed(
       const Duration(seconds: 1),
       () => [
         UserModel(
@@ -28,7 +28,7 @@ class UserDatasource extends IUserDatasource {
           phone: "47995846781",
         ),
       ],
-    ));
+    );
   }
 
   @override
