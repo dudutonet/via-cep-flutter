@@ -37,7 +37,7 @@ class UserRepository extends IUserRepository {
   }
 
   @override
-  Future<Either<Failure, UserModel>> getUserById(int id) async {
+  Future<Either<Failure, UserModel?>> getUserById(int id) async {
     try {
       final result = await datasource.getById(id);
 

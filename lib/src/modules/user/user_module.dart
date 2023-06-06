@@ -1,6 +1,10 @@
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:via_cep_mobile/src/modules/shared/domain/usecases/get_address_by_cep_usecase.dart';
+import 'package:via_cep_mobile/src/modules/user/data/datasource/i_cep_datasource.dart';
 import 'package:via_cep_mobile/src/modules/user/data/datasource/i_user_datasource.dart';
+import 'package:via_cep_mobile/src/modules/user/data/datasource/remote/cep_datasource.dart';
+import 'package:via_cep_mobile/src/modules/user/data/repositories/cep_repository.dart';
+import 'package:via_cep_mobile/src/modules/user/domain/repositories/i_cep_repository.dart';
 import 'package:via_cep_mobile/src/modules/user/domain/repositories/i_user_repository.dart';
 import 'package:via_cep_mobile/src/modules/user/domain/usecases/create_cep_usecase.dart';
 import 'package:via_cep_mobile/src/modules/user/domain/usecases/create_user_usecase.dart';
@@ -19,11 +23,15 @@ class UserModule extends Module {
   @override
   List<Bind> get binds => [
         //Datasources
+        Bind.lazySingleton<ICepDatasource>(
+            (i) => CepDatasource(client: i.get())),
         Bind.lazySingleton<IUserDatasource>(
-            (i) => UserDatasource(client: i.get())),
+            (i) => UserDatasource(client: i.get(), repository: i.get())),
         //Repositories
         Bind.lazySingleton<IUserRepository>(
             (i) => UserRepository(datasource: i.get())),
+        Bind.lazySingleton<ICepRepository>(
+            (i) => CepRepository(datasource: i.get())),
         //Usecases
         Bind.lazySingleton<ICreateUserUsecase>(
             (i) => CreateUserUsecase(repository: i.get())),
@@ -53,6 +61,6 @@ class UserModule extends Module {
   List<ModularRoute> get routes => [
         ChildRoute('/', child: (context, args) => const ListUsersPage()),
         ChildRoute('/new_user',
-            child: (context, args) => NewUserPage(user: args.data)),
+            child: (context, args) => NewUserPage(userId: args.data)),
       ];
 }

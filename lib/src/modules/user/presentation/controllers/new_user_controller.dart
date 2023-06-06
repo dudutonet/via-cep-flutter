@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
 import 'package:via_cep_mobile/src/modules/shared/domain/usecases/get_address_by_cep_usecase.dart';
-import 'package:via_cep_mobile/src/modules/user/data/models/cep_model.dart';
 import 'package:via_cep_mobile/src/modules/user/domain/entities/cep_entity.dart';
 import 'package:via_cep_mobile/src/modules/user/domain/entities/user_entity.dart';
 import 'package:via_cep_mobile/src/modules/user/domain/usecases/create_cep_usecase.dart';
@@ -26,7 +25,8 @@ class NewUserController {
 
   final formKey = GlobalKey<FormState>();
   ValueNotifier<UserEntity> user = ValueNotifier<UserEntity>(UserEntity());
-  ValueNotifier<CepEntity> cep = ValueNotifier<CepEntity>(CepEntity());
+  bool isNew = true;
+  bool loading = false;
 
   TextEditingController streetController = TextEditingController();
   TextEditingController neighborhoodController = TextEditingController();
@@ -34,6 +34,14 @@ class NewUserController {
   TextEditingController ufController = TextEditingController();
   TextEditingController ibgeController = TextEditingController();
   TextEditingController phoneController = TextEditingController();
+  TextEditingController fullnameController = TextEditingController();
+  TextEditingController loginController = TextEditingController();
+  TextEditingController passwordController = TextEditingController();
+  TextEditingController confirmPasswordController = TextEditingController();
+  TextEditingController numberController = TextEditingController();
+  TextEditingController complementController = TextEditingController();
+  TextEditingController cepController = TextEditingController();
+
   MaskTextInputFormatter phoneMask = MaskTextInputFormatter(
       mask: "(##) #####-####", filter: {"#": RegExp(r'[0-9]')});
 
@@ -67,12 +75,20 @@ class NewUserController {
     }
   }
 
-  void edit(UserEntity? user) {
-    if (user != null) {
-      this.user.value = user;
-      changeUser(user);
+  void edit(int? userId) async {
+    isNew = userId == null;
+    if (isNew) {
+      user.value = UserEntity();
+      loading = true;
     } else {
-      this.user.value = UserEntity();
+      final user = await getUserByIdUsecase(userId!);
+      user.fold((l) => null, (r) {
+        if (r != null) {
+          changeUser(r);
+          loading = true;
+          this.user.value = r;
+        }
+      });
     }
   }
 
@@ -80,12 +96,12 @@ class NewUserController {
     change(
       fullname: user.fullname,
       complement: user.complement,
-      cep: user.cep!.cep,
-      city: user.cep!.city,
-      ddd: user.cep!.ddd,
-      ibge: user.cep!.ibge,
-      neighborhood: user.cep!.neighborhood,
-      street: user.cep!.street,
+      cep: user.cepEntity!.cep,
+      city: user.cepEntity!.city,
+      ddd: user.cepEntity!.ddd,
+      ibge: user.cepEntity!.ibge,
+      neighborhood: user.cepEntity!.neighborhood,
+      street: user.cepEntity!.street,
       login: user.login,
       number: user.number,
       phone: user.phone,
@@ -113,9 +129,16 @@ class NewUserController {
     if (city != null) cityController.text = city;
     if (uf != null) ufController.text = uf;
     if (ibge != null) ibgeController.text = ibge;
+    if (phone != null) phoneController.text = phone;
+    if (fullname != null) fullnameController.text = fullname;
+    if (login != null) loginController.text = login;
+    if (password != null) passwordController.text = password;
+    if (complement != null) complementController.text = complement;
+    if (cep != null) cepController.text = cep;
+    if (number != null) numberController.text = number;
 
     CepEntity? cepMoodel;
-    if (user.value.cep != null) {
+    if (user.value.cepEntity != null) {
       cepMoodel = CepEntity(
         cep: cep,
         city: city,
@@ -129,7 +152,8 @@ class NewUserController {
 
     user.value = user.value.copyWith(
       fullname: fullname,
-      cep: cepMoodel,
+      cepEntity: cepMoodel,
+      cep: cep,
       complement: complement,
       login: login,
       number: number,
@@ -144,17 +168,28 @@ class NewUserController {
     final result = await createUserUsecase(user.value);
 
     result.fold((l) => null, (r) {
-      streetController.clear();
-      neighborhoodController.clear();
-      cityController.clear();
-      ufController.clear();
-      ibgeController.clear();
-      phoneController.clear();
       Navigator.of(context).pushReplacementNamed('/');
     });
   }
 
   bool validate() {
     return formKey.currentState!.validate();
+  }
+
+  void cleanForm() {
+    loading = false;
+    streetController.clear();
+    neighborhoodController.clear();
+    cityController.clear();
+    ufController.clear();
+    ibgeController.clear();
+    phoneController.clear();
+    fullnameController.clear();
+    loginController.clear();
+    passwordController.clear();
+    confirmPasswordController.clear();
+    numberController.clear();
+    complementController.clear();
+    cepController.clear();
   }
 }
