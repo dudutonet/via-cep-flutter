@@ -1,4 +1,3 @@
-import 'package:brasil_fields/brasil_fields.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:via_cep_mobile/src/modules/user/presentation/controllers/list_user_controller.dart';
@@ -29,10 +28,10 @@ class _ListUsersPageState extends State<ListUsersPage> {
             itemBuilder: (context, index) => ListTile(
               title: Text(users[index].fullname!),
               subtitle: Text(
-                'Telefone: ${UtilBrasilFields.obterTelefone(users[index].phone!)}',
+                '${users[index].cep}',
               ),
               onTap: () {
-                Modular.to.navigate('new_user', arguments: users[index]);
+                Modular.to.navigate('new_user', arguments: users[index].id);
               },
             ),
           );
