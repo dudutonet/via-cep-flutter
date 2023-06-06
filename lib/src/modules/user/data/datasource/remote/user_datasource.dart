@@ -1,4 +1,3 @@
-import 'package:via_cep_mobile/src/core/errors/failure.dart';
 import 'package:via_cep_mobile/src/core/rest_client/rest_client.dart';
 import 'package:via_cep_mobile/src/modules/user/data/models/user_model.dart';
 import 'package:via_cep_mobile/src/modules/user/domain/repositories/i_cep_repository.dart';
