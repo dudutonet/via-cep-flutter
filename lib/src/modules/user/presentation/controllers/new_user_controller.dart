@@ -153,7 +153,6 @@ class NewUserController {
     user.value = user.value.copyWith(
       fullname: fullname,
       cepEntity: cepMoodel,
-      cep: cep,
       complement: complement,
       login: login,
       number: number,
