@@ -17,31 +17,8 @@ class UserDatasource extends IUserDatasource {
 
   @override
   Future<List<UserModel>> listUsers() async {
-    return Future.delayed(
-      const Duration(seconds: 1),
-      () => [
-        UserModel(
-          id: 1,
-          cepEntity: null,
-          fullname: "David",
-          complement: "casa",
-          login: "david_nine",
-          number: "547",
-          password: "12s1231",
-          phone: "47995846781",
-        ),
-        UserModel(
-          id: 2,
-          cepEntity: null,
-          fullname: "Vitor",
-          complement: "casa",
-          login: "david_nine",
-          number: "547",
-          password: "12s1231",
-          phone: "47995846781",
-        ),
-      ],
-    );
+    final result = await client.get('/api/v1/user') as List;
+    return result.map((e) => UserModel.fromMap(e)).toList();
   }
 
   @override

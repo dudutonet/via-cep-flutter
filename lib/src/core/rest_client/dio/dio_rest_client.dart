@@ -11,12 +11,12 @@ class DioRestClient implements RestClient {
   final String? baseUrl;
 
   BaseOptions _defaultOptions() => BaseOptions(
-        // TODO - Alterar essa base URL...
-        baseUrl: 'http://10.3.16.191:5001',
+        baseUrl: 'http://192.168.0.84:5001/',
         connectTimeout: const Duration(seconds: 60),
         receiveTimeout: const Duration(seconds: 60),
         headers: {
           HttpHeaders.contentTypeHeader: "application/json; charset=utf-8",
+          HttpHeaders.accessControlAllowOriginHeader: "*",
         },
       );
 

@@ -12,7 +12,9 @@ class ListUserController {
   Future<void> list() async {
     final result = await listUsersUsecase();
 
-    result.fold((l) => null, (r) {
+    result.fold((l) {
+      print('deu errado');
+    }, (r) {
       users.value = r;
     });
   }
