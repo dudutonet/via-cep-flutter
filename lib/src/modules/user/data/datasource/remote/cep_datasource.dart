@@ -14,17 +14,7 @@ class CepDatasource extends ICepDatasource {
 
   @override
   Future<CepModel> getByCep(String cep) async {
-    return Future.delayed(
-      const Duration(seconds: 2),
-      () => CepModel(
-        cep: "48121457",
-        city: "Blumenau",
-        neighborhood: "Agua branca",
-        street: "Rua Bahia",
-        uf: "SC",
-        ibge: "123141",
-        ddd: "12",
-      ),
-    );
+    final result = await client.get("/");
+    return CepModel.fromMap(result.data);
   }
 }

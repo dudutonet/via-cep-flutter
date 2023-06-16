@@ -25,13 +25,13 @@ class CepModel extends CepEntity {
 
   static CepModel fromMap(Map<String, dynamic> map) {
     return CepModel(
-      cep: map["cep"],
-      city: map["city"],
-      ibge: map["ibge"],
-      neighborhood: map["neighborhood"],
-      street: map["street"],
+      cep: '${map["cep"]}',
+      city: map["cidade"],
+      ibge: '${map["ibge"]}',
+      neighborhood: map["bairro"],
+      street: map["logradouro"],
       uf: map["uf"],
-      ddd: map["ddd"],
+      ddd: '${map["ddd"]}',
     );
   }
 
