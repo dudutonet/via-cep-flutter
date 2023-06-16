@@ -22,8 +22,8 @@ class UserDatasource extends IUserDatasource {
       () => [
         UserModel(
           id: 1,
+          cepEntity: null,
           fullname: "David",
-          cep: "48121457",
           complement: "casa",
           login: "david_nine",
           number: "547",
@@ -32,8 +32,8 @@ class UserDatasource extends IUserDatasource {
         ),
         UserModel(
           id: 2,
+          cepEntity: null,
           fullname: "Vitor",
-          cep: "48121457",
           complement: "casa",
           login: "david_nine",
           number: "547",
@@ -46,21 +46,7 @@ class UserDatasource extends IUserDatasource {
 
   @override
   Future<UserModel?> getById(int id) async {
-    return await Future.delayed(const Duration(seconds: 2), () async {
-      final cepEntity = await repository.getByCep("457");
-      return cepEntity.fold((i) => null, (cep) {
-        return UserModel(
-          id: 1,
-          fullname: "David",
-          cep: "48121457",
-          cepEntity: cep,
-          complement: "casa",
-          login: "david_nine",
-          number: "547",
-          password: "12s1231",
-          phone: "47995846781",
-        );
-      });
-    });
+    final result = await client.get('/api/v1/user/$id');
+    return UserModel.fromMap(result.data);
   }
 }

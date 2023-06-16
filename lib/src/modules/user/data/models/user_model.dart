@@ -1,3 +1,4 @@
+import 'package:via_cep_mobile/src/modules/user/data/models/cep_model.dart';
 import 'package:via_cep_mobile/src/modules/user/domain/entities/user_entity.dart';
 
 class UserModel extends UserEntity {
@@ -6,11 +7,10 @@ class UserModel extends UserEntity {
     required super.fullname,
     required super.login,
     required super.password,
-    required super.cep,
     required super.number,
     required super.complement,
     required super.phone,
-    super.cepEntity,
+    required super.cepEntity,
   });
 
   Map<String, dynamic> toMap() {
@@ -19,7 +19,6 @@ class UserModel extends UserEntity {
       "fullname": fullname,
       "login": login,
       "password": password,
-      "cep": cep,
       "cepEntity": cepEntity,
       "number": number,
       "complement": complement,
@@ -30,14 +29,13 @@ class UserModel extends UserEntity {
   static UserModel fromMap(Map<String, dynamic> map) {
     return UserModel(
       id: map["id"],
-      fullname: map["fullname"],
+      fullname: map["nome"],
       login: map["login"],
       password: map["password"],
-      cep: map["cep"],
-      cepEntity: map["cepEntity"],
-      number: map["number"],
-      complement: map["complement"],
-      phone: map["phone"],
+      cepEntity: CepModel.fromMap(map["cep"]),
+      number: map["numero"],
+      complement: map["complemento"],
+      phone: map["telefone"],
     );
   }
 
@@ -47,7 +45,6 @@ class UserModel extends UserEntity {
       fullname: entity.fullname,
       login: entity.login,
       password: entity.password,
-      cep: entity.cep,
       cepEntity: entity.cepEntity,
       number: entity.number,
       complement: entity.complement,

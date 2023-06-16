@@ -42,8 +42,8 @@ class NewUserController {
   TextEditingController complementController = TextEditingController();
   TextEditingController cepController = TextEditingController();
 
-  MaskTextInputFormatter phoneMask = MaskTextInputFormatter(
-      mask: "(##) #####-####", filter: {"#": RegExp(r'[0-9]')});
+  MaskTextInputFormatter phoneMask =
+      MaskTextInputFormatter(mask: "(##) #####-####", filter: {"#": RegExp(r'[0-9]')});
 
   getAddress(String cep) async {
     final result = await getAddressByCepUsecase(cep);
@@ -153,7 +153,6 @@ class NewUserController {
     user.value = user.value.copyWith(
       fullname: fullname,
       cepEntity: cepMoodel,
-      cep: cep,
       complement: complement,
       login: login,
       number: number,

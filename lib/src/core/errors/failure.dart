@@ -69,7 +69,8 @@ abstract class Failure extends DioError {
 }
 
 class ServerFailure extends Failure {
-  ServerFailure({String? message, int? code}) : super(message: message ?? "Ocorreu um erro no servidor.", code: code);
+  ServerFailure({String? message, int? code})
+      : super(message: message ?? "Ocorreu um erro no servidor.", code: code);
 }
 
 class UnhandledFailure extends Failure {

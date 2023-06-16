@@ -28,7 +28,7 @@ class _ListUsersPageState extends State<ListUsersPage> {
             itemBuilder: (context, index) => ListTile(
               title: Text(users[index].fullname!),
               subtitle: Text(
-                '${users[index].cep}',
+                '${users[index].phone}',
               ),
               onTap: () {
                 Modular.to.navigate('new_user', arguments: users[index].id);

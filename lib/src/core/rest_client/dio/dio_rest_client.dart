@@ -12,7 +12,7 @@ class DioRestClient implements RestClient {
 
   BaseOptions _defaultOptions() => BaseOptions(
         // TODO - Alterar essa base URL...
-        baseUrl: 'http://localhost:3333',
+        baseUrl: 'http://10.3.16.191:5001',
         connectTimeout: const Duration(seconds: 60),
         receiveTimeout: const Duration(seconds: 60),
         headers: {
